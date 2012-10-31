@@ -1,0 +1,101 @@
+\documentclass[a4paper,12pt]{article}
+%\usepackage[utf8x]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[]{graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{url}
+\usepackage{bm}
+\setlength{\parindent}{0pt}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\setlength{\parskip}{1em}
+
+\begin{document}
+
+\begin{center}
+{\Large{\bf Social Network focusing on Image Content}} \\*[3mm]
+Proposal for Course Project on Principles of Data Management\\*[5mm]
+Qingqing Cai, qingqing.cai@temple.edu\\*[3mm]
+Anjan Nepal, anjan.nepal@temple.edu\\*[3mm]
+\end{center}
+
+\section*{Abstract}
+In most of the existing social networking websites, the content of the images are not given much importance. In this project, we will develop a social networking site in which the main focus will be given on what is in the pictures that are posted by the users. The features for image processing we will use include the surrounding captions, textures and color histograms with lower-bounding. One benefit of our image-based social network is to provide a better way making connections with people with similar interests.
+
+\section*{Objective and Significance}
+Social network is an internet-based platform for communication, whose communication nodes are connected under the same or simiar network. Building a social network site helps people to be together for chatting, exchanging ideas or sharing feelings. Also, it changes traditional marketing channels, and benefits small business. For example, a social network enables salesmen to turn those likes and follows as customer engagement and increase sales. Moreover, it enables salesmen to further broad the market, since they can find new customers with similar interests.
+
+Different from existing social network, our system supports image-based operations. As multi-media progresses nowadays, more and more users intend to upload photos they are interested in; also, users become more interested in broswing others' photos, instead of the status. However, current social network website does not support image retrieval. In terms of this problem, we are mainly focused on developing a new social network website, allowing users to search images, and to find friends with similar interest based on image retrieval results.
+
+\section*{Database Design}
+We firstly develop a high level description of our database system in terms of ER model. The initial design is shown in Figure1. (Due to the limited space, we just list important attributes, and details are left in the following discussion) User, Photo, Album are modeled as entities, and are connected through relations, such as Like, Has, Comment, RequestFriend, Friendship.
+
+Using the standard approach discussed above, we map the ER diagram to the relational model, generating the following table.
+
+User (\emph{\underline{userID}}, \emph{username}, \emph{password}, \emph{firstName}, \emph{lastName}, \emph{address},\emph{birthday}, \emph{gender}, \emph{isActive}, \emph{imagePath})
+
+Photo (\underline{\emph{photoID,}} $\emph{albumID,}$ $\emph{caption,}$ $\emph{featureValue,}$ $\emph{locationPath,}$ $\emph{thumnailPath,}$ $\emph{isRGB,}$ $\emph{uploadTime}$)
+
+Album (\underline{\emph{albumID,}} $\emph{userID,}$ $\emph{thumnailPhotoID,}$ $\emph{albumName,}$ $\emph{description,}$ $\emph{visibility}$)
+
+photoLike (\emph{\underline{userID}}, \emph{\underline{photoID}}, \emph{dataTime}, \emph{isNotified})
+
+friendRequest (\underline{\emph{senderID,} \emph{receiverID,} \emph{dateTime,}} $\emph{isNotified}$)
+
+friendship (\underline{\emph{userID1,} \emph{userID2,}} $\emph{startDateTime,}$ $\emph{isNotified}$)
+
+comment (\underline{\emph{commentID,}} $\emph{commenterID,}$ $\emph{photoID,}$ $\emph{text,}$ $\emph{dateTime,}$ $\emph{isNotified}$)
+
+
+Details for each table are described as follows.
+
+(1) In User, we record each user's personal information, such as userID, username, password, firstName, etc. A unique userID is to identify a distinct user; userName and password are needed to access the online database.
+
+(2) For each photo, we need to specify which album it belongs to by checking albumID; the photo informationm, such as caption, isRGB, is useful for image retrieval in our furture design.
+
+(3) Album is a collection of photos, and it beongs to a particular user. A privacy setting is applied in our system, retricting the visibility of the album posted on the site. It has three possible values PRIVATE, FRIENDS, EVERYONE.
+
+(4) PhotoLike is a relation connecting a user and photos they like. isNotified is TRUE when a user "likes" the photo, and then the system sends a notification to the user who owns the photo. Comment supports users to comment photos posted online, and our system records the content and the post time. Also, notification is sent to the photo owner when the event is active.
+
+(5) Finally, friendRequest is a request sending from userID1 to userID2. Once userID2 accepts the request, they become friends, and a new tuple is inserted in friendship. Notification is sent to corresponding users if necessary.
+
+\section*{Functionality Description}
+The following common type of functions could be handled by our target system.
+(1) Registration: new users have to provide their personal infromation when they create an account, and our system would return a unique userName and a password; (2) Upload: users are allowed to upload photos, or add photos from other photo albums which are visible to him. (3) Browse and Comment: users can browse through visible albums, and create comments if they want; (4) Send request: each user can send request to other users, who also have an account in our system.
+
+Besides these functionalities described above, our system also supports image retrieval. Specifically, there are three actions. (1) given an image, search similar images that are visible to the user; (2) friends suggestion: search users who have similar photos in their album as those in others'; (3) split photos in one album into other (existing or new) albums according to the similarities among photos.
+
+The image features we plan to use in our system includes correlogram \cite{correlogram} and texture. Correlograms are good for color images but lose their power for gray images. In view of this problem, we will include texture features in our system. Most researchers have shown that texture plays an important role in human vision and is important in image classification.
+
+\section*{Software and Tools}
+The database system we will use is PostgreSQL, which is a multi-user, multi-threaded database management system. We will use Django, a framework for web development, based on Python. And the system runs in Linux. We will use Git\cite{git} for the concurrency version control.
+
+\section*{Milestones}
+We have several milestones and we plan to complete them within some predefined time. The milestones and the time allocated are detailed below.
+
+
+\begin{center}
+  \begin{tabular}{| l | l | l |}
+  \hline
+      Milestone & Date & Involvement \\ 
+  \hline
+  \hline
+    Database Design and ER & Week 1 & Qingqing and Anjan \\ \hline
+    Create and populate tables & Week 1 & Qingqing and Anjan \\ \hline
+    Web Interface & Week 2 & Qingqing and Anjan \\ \hline
+    Image queries and clustering & Week 3 & Qingqing and Anjan \\ \hline
+    Documentation and Packaging & Week 4 & Qingqing and Anjan \\ \hline
+  \end{tabular}
+\end{center}
+
+
+\begin{thebibliography}{50}
+ \bibitem{correlogram} Huang, Jing, et al. "Image indexing using color correlograms." Computer Vision and Pattern Recognition, 1997. Proceedings., 1997 IEEE Computer Society Conference on. IEEE, 1997.
+ \bibitem{git} \url{http://git-scm.com/}
+ \bibitem{postgres} \url{http://www.postgresql.org/}
+ \bibitem{django} \url{https://www.djangoproject.com/}
+  
+\end{thebibliography}
+\end{document}          
+
+

@@ -16,5 +16,5 @@ Welcome to <?php echo $sitename; ?>
 <a href="users/register.php">Register</a>
 
 <?php 
-include_once('../footer.php');
+include_once('footer.php');
 ?>

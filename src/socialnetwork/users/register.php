@@ -31,14 +31,12 @@ if($_POST['register_submit'] == "Submit") { //form has been submitted
 		die('Error saving in database. Query failed: ' . pg_last_error());
 	} else {
 		pg_free_result($result);
-		header("Location: /sn/index.php");
+		session_start();
+		$_SESSION['message'] = "Congratulations! You are registered. Start by logging in.";
+		header("Location: /sn/users/login.php");
 	}
 }
 ?>
-<head>
-<title>Register User</title>
-</head>
-<body>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <h2>Registration</h2>
 <table>

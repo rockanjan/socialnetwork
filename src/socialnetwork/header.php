@@ -2,6 +2,7 @@
 include_once 'database_open.php';
 $sitename = "Social Networking Using Image Content";
 $base = "/sn";
+session_start();
 ?>
 <html>
 <head>
@@ -22,19 +23,21 @@ $base = "/sn";
 <div id="message"> 
 	<p>
 		<?php 
-			session_start();
-			if( isset($_SESSION['message']) ) echo $_SESSION['message'];
-			session_unset($_SESSION['message']);
+			if( isset($_SESSION['message']) ) {
+				echo $_SESSION['message'];
+				unset($_SESSION['message']);
+			}
 		?>
 	</p>
 </div>
 
 <div id="error"> 
 	<p>
-		<?php 
-			session_start();
-			if( isset($_SESSION['error']) ) echo $_SESSION['error'];
-			session_unset($_SESSION['error']);
+		<?php
+			if( isset($_SESSION['err']) ) {
+				echo $_SESSION['err'];
+				unset($_SESSION['err']);
+			}
 		?>
 	</p>
 </div>

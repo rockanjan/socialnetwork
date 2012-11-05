@@ -2,6 +2,10 @@
 $page_title = "Register";
 $current_page = "home";
 include_once('../header.php');
+if(isset($_SESSION['uid'])) {
+	header("Location: /sn/users/home.php");
+	exit();
+}
 if($_POST['register_submit'] == "Submit") { //form has been submitted
 	$username = $_POST['username'];
 	$password = $_POST['password'];

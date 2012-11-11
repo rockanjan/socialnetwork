@@ -17,6 +17,7 @@ if($_POST['login_submit'] == "Submit") { //form has been submitted
 		exit();
 	} else {	
 		$result = pg_exec($dbconn, "select * from person where username='$username'");
+		$numrows = pg_num_rows($result);
 		if($numrows = 0) { //user not found
 			$_SESSION['err'] = "Username/Password do not match";
 			session_write_close();
@@ -29,8 +30,15 @@ if($_POST['login_submit'] == "Submit") { //form has been submitted
 			if($password == $row["password"]) {
 				session_destroy();
 				session_start();
-				$_SESSION['uid'] = trim($username);
-				$_SESSION['uname'] = $row["firstname"] . " " . $row["lastname"];
+				$_SESSION['uid'] = $row["personid"];
+				$_SESSION['uname'] = trim($username);
+				$_SESSION['name'] = $row["firstname"] . " " . $row["lastname"];
+				$imagepath = $row["imagepath"];
+				if($imagepath == null || $imagepath == '') {
+					$_SESSION['image'] = '../images/defaultuser.png';
+				} else {
+					$_SESSION['image'] = $imagepath;
+				}
 				session_write_close();
 				header("Location: /sn/users/home.php");
 				exit();

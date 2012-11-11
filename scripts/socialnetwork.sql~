@@ -16,7 +16,7 @@ imagepath VARCHAR(200)
 );
 
 INSERT INTO "public"."person" ("username","password","firstname","lastname","address","birthday","gender","isactive","imagepath")
-					VALUES ('root','root','Admin','',NULL,NULL, Y, Y, NULL);
+					VALUES ('root','root','Admin','',NULL,NULL, TRUE, TRUE, NULL);
 
 CREATE TABLE album (
     albumid SERIAL PRIMARY KEY,

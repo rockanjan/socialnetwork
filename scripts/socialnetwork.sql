@@ -21,7 +21,7 @@ INSERT INTO "public"."person" ("username","password","firstname","lastname","add
 CREATE TABLE album (
     albumid SERIAL PRIMARY KEY,
     userid integer references person(personid),
-    thumnailphotoid integer,
+    thumbnailphotoid integer,
     albumname character varying(50),
     description text,
     visibility character(10)
@@ -32,7 +32,7 @@ CREATE TABLE photo (
     albumid integer references album(albumid),
     caption text,
     locationpath character(100),
-    thumnailpath character(100),
+    thumbnailpath character(100),
     isrgb boolean,
     uploadtime date,
     feature double precision[]

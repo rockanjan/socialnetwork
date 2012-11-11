@@ -2,6 +2,7 @@
 include_once 'database_open.php';
 $sitename = "Social Networking Using Image Content";
 $base = "/sn";
+$imagedir = "../images/";
 session_start();
 ?>
 <html>
@@ -19,6 +20,12 @@ session_start();
   </div>
 </div>
 <hr>
+
+<?php
+if(isset($_SESSION['uid'])) {
+	include_once("user_header.php");
+} 
+?>
 
 <div id="message"> 
 	<p>

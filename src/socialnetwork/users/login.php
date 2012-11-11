@@ -13,7 +13,7 @@ if($_POST['login_submit'] == "Submit") { //form has been submitted
 		//echo "Username/Password cannot be blank";
 		$_SESSION['err'] = "Username/Password cannot be blank";
 		session_write_close();
-		header("Location: /sn/users/login.php");
+		header("Location: /sn/users/login.php"); //redirect
 		exit();
 	} else {	
 		$result = pg_exec($dbconn, "select * from person where username='$username'");

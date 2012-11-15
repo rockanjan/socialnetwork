@@ -48,11 +48,25 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				} else {
 					$isrgb = false;
 				}
-				//TODO: isrgb test now working
+				//TODO: isrgb test not working
 				
+				/****** calculate the feature vector ******/
+				unset($featurevector);
+				unset($status);
+				$command = 'java -jar /home/tud51534/socialnetwork/lib/feature.jar ' . $imagepath;
+				exec($command, $featurevector, $status);
+				if($status != 0) {
+					echo 'error executing the script';
+				}
+				$featurevector = $featurevector[0];
+				$featurevector = str_replace(" ", ",", $featurevector);
+				//echo $featurevector;
+				//exit();
+				$featurevalueinsert = '{' . $featurevector . '}';
+				/****** feature vector calculation complete *****/
 				//insert record
 				$query = "INSERT INTO photo (photoid, albumid, caption, locationpath, thumbnailpath, isrgb, uploadtime, feature)
-						VALUES ('$photoid', '$albumid', '$caption', '$imagepath', null, true, now(), null)";
+						VALUES ('$photoid', '$albumid', '$caption', '$imagepath', null, true, now(), '$featurevalueinsert')";
 				$result = pg_query($query);
 				if(! $result) {
 					die('Error saving in database. Query failed: ' . pg_last_error());

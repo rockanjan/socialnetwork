@@ -4,6 +4,7 @@
 </p>
 <a href="createalbum.php">Create new album</a> &nbsp; &nbsp;
 <a href="addphoto.php">Add photos </a> &nbsp; &nbsp;
+<a href="searchphoto.php">Search photos </a> &nbsp; &nbsp;
 <a href="#">Search Friends</a> &nbsp; &nbsp;
 <a href="logout.php">Logout</a>
 <hr />

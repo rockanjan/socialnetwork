@@ -24,7 +24,7 @@ if(array_key_exists('searchphoto_submit', $_POST)) { //form has been submitted
 		$tmpimage = $imagedir . "tmp" . $_SESSION['uid'] . "." . $extension;
 		move_uploaded_file($_FILES['image']['tmp_name'], $tmpimage);
 		echo "The query image is: " . "<br>";
-		echo "<img src='$tmpimage' />";
+		echo "<img src='$tmpimage' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
 		echo "<br>";
 		
 		$imagefeature = getFeatureVectors($tmpimage);	//this is a string
@@ -65,7 +65,7 @@ function dosearch($queryfeature, $result){
 // 		echo "<img src='$locationpath_rows[$key]' />";
 // 		echo "<br>";
 		echo "Top " . $rank . "<br>";
-		echo "<img src='$locationpath_rows[$key]' />";
+		echo "<img src='$locationpath_rows[$key]' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
 		echo "<br>";
 		echo "<br>";
 		echo "<br>";

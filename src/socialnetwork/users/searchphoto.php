@@ -100,7 +100,7 @@ function getDistanceVectors($queryfeature, $feature_rows){
 function getFeatureVectors($imagepath){
 	unset($featurevector);
 	unset($status);
-	$command = 'java -jar ../lib/feature.jar ' . $imagepath;
+	$command = 'java -jar /var/www/sn/lib/feature.jar ' . $imagepath;
 	exec($command, $featurevector, $status);
 
 	if($status != 0) {

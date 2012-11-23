@@ -53,7 +53,7 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				/****** calculate the feature vector ******/
 				unset($featurevector);
 				unset($status);
-				$command = 'java -jar ../lib/feature.jar ' . $imagepath;
+				$command = 'java -jar /var/www/sn/lib/feature.jar ' . $imagepath;
 				exec($command, $featurevector, $status);
 				if($status != 0) {
 					echo 'error executing the script';

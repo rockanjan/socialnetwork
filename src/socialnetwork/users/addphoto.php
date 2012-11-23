@@ -57,6 +57,7 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				exec($command, $featurevector, $status);
 				if($status != 0) {
 					echo 'error executing the script';
+					exit();
 				}
 				$featurevector = $featurevector[0];
 				$featurevector = str_replace(" ", ",", $featurevector);

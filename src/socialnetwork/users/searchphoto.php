@@ -105,6 +105,7 @@ function getFeatureVectors($imagepath){
 
 	if($status != 0) {
 		echo 'error executing the script';
+		exit();
 	}
 
 	$featurevector = $featurevector[0];

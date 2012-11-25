@@ -32,8 +32,9 @@ if($numrows == 0) {
 	} else {
 		//current user is the owner.
 		//also show the album options
-		echo "<a href='#'>Modify Album</a> &nbsp;";
-		echo "<a href='addphoto.php?albumid=$albumid'>Add a photo</a>";
+		echo "<a href='#'>Modify Album</a> &nbsp; &nbsp;";
+		echo "<a href='addphoto.php?albumid=$albumid'>Add a photo</a> &nbsp; &nbsp;";
+		echo "<a href='cluster.php?albumid=$albumid'>Cluster Album</a>";
 		echo "<br />";
 		//fetch all photos in this album
 		$result = pg_exec($dbconn, "select * from photo where albumid='$albumid'");

@@ -1,5 +1,6 @@
 <?php
 $host = '127.0.0.1';
+//$host = 'ec2-184-73-14-96.compute-1.amazonaws.com';
 $port = '5432';
 $database = 'socialnetwork';
 $user = 'postgres';

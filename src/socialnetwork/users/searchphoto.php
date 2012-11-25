@@ -17,7 +17,7 @@ if(array_key_exists('searchphoto_submit', $_POST)) { //form has been submitted
 	$albumid = $_POST['albumid'];
 	if($_FILES['image']['name'] == '') {
 		$_SESSION['err'] = 'Choose an image to search';
-		header("Location: qingqing.php?photoid=$photoid");
+		header("Location: searchphoto.php");
 		exit();
 	} else {
 		//get and show image query

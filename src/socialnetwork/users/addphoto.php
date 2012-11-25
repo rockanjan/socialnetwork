@@ -66,8 +66,6 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				$featurevalueinsert = '{' . $featurevector . '}';
 				
 				/****** feature vector calculation complete *****/
-				
-				
 				//insert record
 				$query = "INSERT INTO photo (photoid, albumid, caption, locationpath, thumbnailpath, isrgb, uploadtime, feature)
 						VALUES ('$photoid', '$albumid', '$caption', '$imagepath', null, true, now(), '$featurevalueinsert')";

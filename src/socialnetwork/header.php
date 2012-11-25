@@ -13,7 +13,8 @@ session_start();
 	<script>
 		$(document).ready(function()
 		{
-	    $(".removeAction").click(function()
+			//deleting photo
+		  $(".removeAction").click(function()
 	    {
 		    var name = $(location).attr('href');
 		    var albumid = name.split("=")[1].split("#")[0];
@@ -26,6 +27,16 @@ session_start();
 	    				}
 		    	);	    	
 	    });
+
+		  $(".cluster_album_form").submit(function(e)
+				  {
+			  		e.preventDefault();
+			  		$.post("<?php echo $base?>/users/createalbumfromcluster.php", $(this).serializeArray(), function(data) {
+						   alert(data);						   
+						 });
+			  		$(this).hide();
+				  });
+		  return false;
 		});
 </script>
 </head>

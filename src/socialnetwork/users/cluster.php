@@ -29,6 +29,10 @@ if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted
 	//feature information
 	$feature_index =  pg_field_num($result, "feature");
 	$feature_rows = pg_fetch_all_columns($result, $feature_index);
+	//photo ids
+	$photo_index = pg_field_num($result, "photoid");
+	$photo_ids = pg_fetch_all_columns($result, $photo_index);
+	
 	$len = count($feature_rows);
 	//convert from string to feature array
 	$features = array();
@@ -125,12 +129,18 @@ if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted
 	*/
 	//display the images
 	for($j=0; $j<$k; $j++) {
-		echo "<h3>Cluster $j </h3>";
+		echo "<form action='' name='form$j' class='cluster_album_form'>";
 		for($i=0; $i<$len; $i++) {
 			if($assignment[$i] == $j) {
+				echo "<input name='photoids[]' type='hidden' value='$photo_ids[$i]' />"; 
 				echo "<img src='$locationpath_rows[$i]' style='max-width: 200px; max-height: 200px;' width=200px height=200px /> &nbsp;";
 			}	
 		}
+		echo "<br />";
+		echo "Album Name : <input name='albumname' type='text' value='cluster$j' />";
+		echo "<input type='submit' name='newalbumfromclustersubmit' value='Create New Album' class='button'/>" ;
+		echo "</form>";
+		echo "<hr />"; 
 	}
 	exit;
 }

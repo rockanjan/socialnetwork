@@ -40,10 +40,11 @@ if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted
 	/** K-means starts **/
 	//initial means
 	$mean = array();
-	//echo "Size of features : " . count($features);
 	for($i=0; $i<$k; $i++) {
-		//TODO select mean appropriately
-		array_push($mean, $features[$i*3]);		
+		//random init
+		$rand_int = rand(0, $len-1);
+		array_push($mean, $features[$rand_int]);
+		//array_push($mean, $features[$i*3]);		
 	}
 
 	$assignment = array();
@@ -111,7 +112,7 @@ if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted
 		}
 		$iter++;
 		//break condition
-		if($iter == 1) {
+		if($iter == 30) {
 			break;
 		}
 	}

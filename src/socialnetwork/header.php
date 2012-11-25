@@ -8,7 +8,26 @@ session_start();
 <html>
 <head>
 	<title>Social Network : <?php echo $page_title; ?></title>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base?>/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo $base?>/styles/style.css" />
+	<script src="<?php echo $base?>/lib/jquery-1.8.3.min.js"> </script>
+	<script>
+		$(document).ready(function()
+		{
+	    $(".removeAction").click(function()
+	    {
+		    var name = $(location).attr('href');
+		    var albumid = name.split("=")[1].split("#")[0];
+		    $.get("<?php echo $base?>/users/deletephoto.php", 
+	    	    	{ photoid: this.id}, 
+	    	    	function(data) {
+		    	    	alert(data);
+		    	    	var url = "<?php echo $base?>/users/viewalbum.php?id="+albumid;    
+		    	    	$(location).attr('href',url);
+	    				}
+		    	);	    	
+	    });
+		});
+</script>
 </head>
 <body>
 <h2 id="sitename"><?php echo $sitename?></h2>

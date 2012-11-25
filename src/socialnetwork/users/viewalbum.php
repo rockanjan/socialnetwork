@@ -8,10 +8,28 @@ if(! isset($_SESSION['uid'])) {
 	exit();
 }
 ?>
+
 <h2>View Album</h2>
 <?php
 $userid = $_SESSION['uid']; 
 $albumid = $_GET['id'];
+if($albumid == '' || $albumid == null) {
+	$result = pg_exec($dbconn, "select * from album where userid='$userid'");
+	$numrows = pg_num_rows($result);
+	if($numrows == 0) {
+		echo "<p> You do not have an album yet. <a href='createalbum.php'> Create a new album </a> </p>";
+	} else {
+		echo "<p> Choose an album from below</a></p>";
+		echo "<ul>";
+		for ($i = 0; $i < $numrows; $i++) {
+			$row = pg_fetch_array($result, NULL, PGSQL_ASSOC);
+			$albumid = $row['albumid'];
+			echo "<li> <a href='viewalbum.php?id=$albumid'>" . $row['albumname'] . "</a></li>";
+		}
+		echo "</ul>";
+	}
+	exit;
+}
 $result = pg_exec($dbconn, "select * from album where albumid='$albumid'");
 $numrows = pg_num_rows($result);
 if($numrows == 0) {
@@ -57,6 +75,8 @@ if($numrows == 0) {
 				//display image
 				echo "<img src='$locationpath' style='max-width: 200px; max-height: 200px;' width=200px height=200px>" . $row['albumname'] . "</img> <br />";
 				echo $caption;
+				echo "<br />";
+				echo "<a href='#' class='removeAction' id='$photoid'>Delete</a>";
 				if($i % $columns == $columns - 1) {
 					echo "</td></tr>";
 				} else {

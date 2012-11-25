@@ -8,6 +8,7 @@ if(! isset($_SESSION['uid'])) {
 	exit();
 }
 ?>
+
 <h2> Split Album </h2>
 <?php 
 if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted

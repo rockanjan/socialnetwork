@@ -15,6 +15,7 @@ if(! isset($_SESSION['uid'])) {
 <?php
 //form handling
 	$photoid = $_GET['photoid'];
+	$currentuserid = $_SESSION['uid'];
 	
 	//given photoid, get location and feature information
 	$query = "select locationpath from photo where photoid='$photoid'";
@@ -42,18 +43,20 @@ if(! isset($_SESSION['uid'])) {
 	$result = pg_exec($dbconn, $query);
 			
 	//compare the image query with images in our database and show the results
-	$distance_rows = dosearch($queryfeature, $result);
+	$distance_rows = dosearch($queryfeature, $result, $currentuserid);
 			
 	exit();
 ?>
 
 <?php
-function dosearch($queryfeature, $result){
+function dosearch($queryfeature, $result, $currentuserid){
 	$len = pg_num_rows($result);
 //	echo "number of rows in the database is " . $len . "<br>";
 	//user information
 	$username_index =  pg_field_num($result, "firstname");
 	$username_rows = pg_fetch_all_columns($result, $username_index);
+	$userid_index = pg_field_num($result, "personid");
+	$useridforimage_rows = pg_fetch_all_columns($result, $userid_index);
 	
 	//location information
 	$locationpath_index = pg_field_num($result, "locationpath");
@@ -72,13 +75,18 @@ function dosearch($queryfeature, $result){
 	$rank = 1;
 	echo "<table>";
 	foreach ($distance_rows as $key => $val) {
+		$useridforimage = $useridforimage_rows[$key];
 		echo "<tr>";
 		echo "<td>";
 		echo "Top " . $rank . "<br>";
 		echo "<img src='$locationpath_rows[$key]' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
 		echo "</td>";
 		echo "<td>";
-		echo "The photo belongs to user: <a href='#'>$username_rows[$key]</a> <input type='button' value='Add Friend' />";
+		if($currentuserid == $useridforimage) {
+			echo "The photo belongs to you.";
+		} else {
+			echo "The photo belongs to user: <a href='#'>$username_rows[$key]</a> <input type='button' value='Add Friend' />";
+		}
 		echo "</td>";
 		echo "</tr>";
 		$rank = $rank+1;

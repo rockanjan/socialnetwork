@@ -76,7 +76,8 @@ if($numrows == 0) {
 				echo "<img src='$locationpath' style='max-width: 200px; max-height: 200px;' width=200px height=200px>" . $row['albumname'] . "</img> <br />";
 				echo $caption;
 				echo "<br />";
-				echo "<a href='#' class='removeAction' id='$photoid'>Delete</a>";
+				echo "<a href='#' class='removeAction' id='$photoid'>Delete</a> &nbsp;";
+				echo "<a href='$base/users/findsimilar.php?photoid=$photoid' target='_blank'>Find Similiar</a>";
 				if($i % $columns == $columns - 1) {
 					echo "</td></tr>";
 				} else {

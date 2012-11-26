@@ -1,5 +1,7 @@
+
+
 <?php
-$page_title = "Search photo";
+$page_title = "find similar photos";
 $current_page = "home";
 include_once('../header.php');
 if(! isset($_SESSION['uid'])) {
@@ -8,49 +10,41 @@ if(! isset($_SESSION['uid'])) {
 	exit();
 }
 ?>
-<h2> Search photo</h2>
-
+<h2> find similar photos</h2>
 
 <?php
 //form handling
-if(array_key_exists('searchphoto_submit', $_POST)) { //form has been submitted
-	$albumid = $_POST['albumid'];
-	if($_FILES['image']['name'] == '') {
-		$_SESSION['err'] = 'Choose an image to search';
-		header("Location: searchphoto.php");
-		exit();
-	} else {
-		//get and show image query
-		$tmpimage = $imagedir . "tmp" . $_SESSION['uid'] . "." . $extension;
-		move_uploaded_file($_FILES['image']['tmp_name'], $tmpimage);
-		echo "The query image is: " . "<br>";
-		echo "<img src='$tmpimage' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
-		echo "<br>";
-		
-		$imagefeature = getFeatureVectors($tmpimage);	//this is a string
-		$queryfeature = split(",", $imagefeature);	//this is a vector
-
-		//get image features from the database
-	//	$result = pg_exec($dbconn, "select * from photo");
-		$query = "select photo.photoid,photo.locationpath,photo.feature,person.personid,person.firstname,person.lastname from photo,album,person where photo.albumid=album.albumid and album.userid=person.personid";
-		$result = pg_exec($dbconn, $query);
-		
-		
-		//print information
-// 		$numrows = pg_num_rows($result);
-// 		echo "number of results = " . $numrows . "</br>";
-// 		for($i=0; $i<$numrows; $i++){
-// 			echo "<img src='$locationpath_rows[$i]' style='max-width: 200px; max-height: 200px;' width=200px height=200px /> &nbsp;";
-// 			echo "$username_rows[$i]";
-// 			echo "$feature_rows";
-// 		}
+	$photoid = $_GET['photoid'];
 	
-		//compare the image query with images in our database and show the results
-		$distance_rows = dosearch($queryfeature, $result);
-		
-		exit();
-	}
-}
+	//given photoid, get location and feature information
+	$query = "select locationpath from photo where photoid='$photoid'";
+	$result = pg_exec($dbconn, $query);
+	
+	//location information
+	$locationpath_index = pg_field_num($result, "locationpath");
+	$locationpath_rows = pg_fetch_all_columns($result, $locationpath_index);
+	
+	//feature information
+	$feature_index =  pg_field_num($result, "feature");
+	$feature_rows = pg_fetch_all_columns($result, $feature_index);
+	
+	//show the original image
+	$tmpimage = $locationpath_rows[0];
+	echo "The original image is : " . "<br>";
+	echo "<img src='$tmpimage' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
+	echo "<br>";
+			
+	$imagefeature = getFeatureVectors($tmpimage);	//this is a string
+	$queryfeature = split(",", $imagefeature);	//this is a vector
+	
+	//get image features from the database
+	$query = "select photo.photoid,photo.locationpath,photo.feature,person.personid,person.firstname,person.lastname from photo,album,person where photo.albumid=album.albumid and album.userid=person.personid";
+	$result = pg_exec($dbconn, $query);
+			
+	//compare the image query with images in our database and show the results
+	$distance_rows = dosearch($queryfeature, $result);
+			
+	exit();
 ?>
 
 <?php
@@ -73,19 +67,23 @@ function dosearch($queryfeature, $result){
 	$distance_rows = getDistanceVectors($queryfeature, $feature_rows);
 	
 	//show the search results
-	echo "The top ranked images are listed as follows: " . "<br>";
+	echo "The top ranked similar images are listed as follows: " . "<br>";
 	asort($distance_rows);
 	$rank = 1;
+	echo "<table>";
 	foreach ($distance_rows as $key => $val) {
+		echo "<tr>";
+		echo "<td>";
 		echo "Top " . $rank . "<br>";
 		echo "<img src='$locationpath_rows[$key]' style='max-width: 200px; max-height: 200px;' width=200px height=200px />";
-		echo "The photo belongs to user: $username_rows[$key]";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		
+		echo "</td>";
+		echo "<td>";
+		echo "The photo belongs to user: <a href='#'>$username_rows[$key]</a> <input type='button' value='Add Friend' />";
+		echo "</td>";
+		echo "</tr>";
 		$rank = $rank+1;
 	}
+	echo "</table>";
 	echo "<br>";
 
 	return $distance_rows;
@@ -145,23 +143,4 @@ function getDistance($arr1, $arr2){
 	}
 	return $result;
 }
-?>
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-<input type="hidden" name="photoid" value="<?php echo $photoid;?>" /> 
-<table>
-<tr>
-	<td><label>Photo</label></td>
-	<td>
-		<input type="file" name="image" /><br>
-	</td>
-</tr>
-<tr>
-	<td></td>
-	<td><input name="searchphoto_submit" type="submit" value="Submit"/><br /></td>
-</tr>
-</table>
-</form>
-<?php 
-include_once('../footer.php');
 ?>

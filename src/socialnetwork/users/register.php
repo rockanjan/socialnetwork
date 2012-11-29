@@ -18,9 +18,9 @@ if(array_key_exists('register_submit', $_POST)) { //form has been submitted
 	}
 	$gender = $_POST['sex'];
 	if( strcmp(strtolower($gender),"male") == 0) {
-		$gender = true;
+		$gender = 1;
 	} else {
-		$gender = false;
+		$gender = 0;
 	}
 	//TODO: perform validation
 	$result = pg_exec($dbconn, "select * from person where username='$username'");

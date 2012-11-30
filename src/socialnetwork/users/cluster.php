@@ -137,11 +137,11 @@ if(array_key_exists('cluster_submit', $_POST)) { //form has been submitted
 			}	
 		}
 		echo "<br />";
-		echo "Album Name : <input name='albumname' type='text' value='cluster$j' />";
+		echo "<label>Album Name :</label> <input name='albumname' type='text' value='cluster$j' />";
 		echo "<input type='submit' name='newalbumfromclustersubmit' value='Create New Album' class='button'/>" ;
 		echo "</form>";
-		echo "<hr />"; 
 	}
+	include_once('../footer.php');
 	exit;
 }
 
@@ -182,6 +182,7 @@ if($albumid == null) {
 		}
 		echo "</ul>";
 	}
+	include_once('../footer.php');
 	exit();
 }
 
@@ -221,7 +222,7 @@ if($numrows == 0) {
 </td>
 <tr>
 <td></td>
-<td><input name="cluster_submit" type="submit" value="Submit"/><br /></td>
+<td><input name="cluster_submit" type="submit" value="Submit" class="button"/><br /></td>
 </tr>
 </table>
 </form>

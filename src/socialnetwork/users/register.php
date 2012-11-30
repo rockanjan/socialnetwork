@@ -124,7 +124,7 @@ if(array_key_exists('register_submit', $_POST)) { //form has been submitted
 </tr>
 <tr>
 	<td></td>
-	<td><input name="register_submit" type="submit" value="Submit"/><br /></td>
+	<td><input name="register_submit" type="submit" value="Submit" class="button"/><br /></td>
 </tr>
 </table>
 </form>

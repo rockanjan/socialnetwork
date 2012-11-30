@@ -1,6 +1,9 @@
 
-<!-- <div id="footer"> -->
-<!-- 	<p> Copyright Anjan, Qingqing 2012 </p> -->
-<!-- </div> -->
+</div> <!-- page -->
+<div id="footer">
+	<p> SNUI &copy; 2012, Anjan Nepal, Qingqing Cai 
+	<br/>Temple University</p>
+</div>
+</div> <!-- wrapper -->
 </body>
 </html>

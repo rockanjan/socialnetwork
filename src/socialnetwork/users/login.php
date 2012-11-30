@@ -66,10 +66,12 @@ if($_POST['login_submit'] == "Submit") { //form has been submitted
 </tr>
 <tr>
 	<td></td>
-	<td><input name="login_submit" type="submit" value="Submit"/><br /></td>
+	<td><input name="login_submit" type="submit" value="Submit" class="button"/><br /></td>
 </tr>
 </table>
 </form>
+
+<p> Do not have an account yet? Register <a href="register.php"> here </a>
 <?php 
 include_once('../footer.php');
 ?>

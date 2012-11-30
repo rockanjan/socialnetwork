@@ -80,7 +80,7 @@ Your existing albums:
 </tr>
 <tr>
 	<td></td>
-	<td><input name="createalbum_submit" type="submit" value="Submit"/><br /></td>
+	<td><input name="createalbum_submit" type="submit" value="Submit" class="button"/><br /></td>
 </tr>
 </table>
 </form>

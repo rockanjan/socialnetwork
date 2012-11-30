@@ -57,6 +57,7 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				exec($command, $featurevector, $status);
 				if($status != 0) {
 					echo 'error executing the script';
+					
 					exit();
 				}
 				$featurevector = $featurevector[0];
@@ -103,12 +104,14 @@ if($albumid == null) {
 		}
 		echo "</ul>";
 	}
+	include_once('../footer.php');
 	exit();
 } 
 	$result = pg_exec($dbconn, "select * from album where albumid='$albumid'");
 	$numrows = pg_num_rows($result);
 	if($numrows == 0) {
 		echo "No such album found";
+		include_once('../footer.php');
 		exit();
 	} else {
 		$row = pg_fetch_array($result, NULL, PGSQL_ASSOC);
@@ -119,10 +122,12 @@ if($albumid == null) {
 		if($useridforalbum != $userid) {
 			if($visibility == "private") {
 				echo "You are not allowed to add photo to this album";
+				include_once('../footer.php');
 				exit();
 			} 
 			elseif($visibility == "friends") {
 				echo "You are not allowed to add photo to this album";
+				include_once('../footer.php');
 				exit();
 			}
 		} else {

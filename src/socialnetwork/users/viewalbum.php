@@ -28,6 +28,7 @@ if($albumid == '' || $albumid == null) {
 		}
 		echo "</ul>";
 	}
+	include_once('../footer.php');
 	exit;
 }
 $result = pg_exec($dbconn, "select * from album where albumid='$albumid'");
@@ -89,6 +90,3 @@ if($numrows == 0) {
 }
 ?>
 
-<?php 
-include_once('../footer.php');
-?>

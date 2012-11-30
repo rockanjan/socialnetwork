@@ -2,7 +2,7 @@
 include_once 'database_open.php';
 $sitename = "Social Networking Using Image Content";
 $base = "/sn";
-$imagedir = "../images/";
+$imagedir = $base . "/images/";
 session_start();
 ?>
 <html>
@@ -41,40 +41,59 @@ session_start();
 </script>
 </head>
 <body>
-<h2 id="sitename"><?php echo $sitename?></h2>
-<div id="wrapper">  
-	<div id="header">  
-  	<ul id="navigation">  
-    	<li class="home"><a <?php if ($current_page == "home") { ?>class="selected"<?php } ?> href="<?php echo $base?>">Home</a></li>
-    </ul>  
-  </div>
-</div>
-<hr>
-
-<?php
-if(isset($_SESSION['uid'])) {
-	include_once("user_header.php");
-} 
-?>
-
-<div id="message"> 
-	<p>
-		<?php 
-			if( isset($_SESSION['message']) ) {
-				echo $_SESSION['message'];
-				unset($_SESSION['message']);
-			}
-		?>
-	</p>
-</div>
-
-<div id="error"> 
-	<p>
-		<?php
-			if( isset($_SESSION['err']) ) {
-				echo $_SESSION['err'];
-				unset($_SESSION['err']);
-			}
-		?>
-	</p>
-</div>
+<div id="wrapper">
+		<div id="sitename">
+			<div class="clear"></div>
+			<div id="logo">
+				<a href="<?php echo $base?>"><img src="<?php echo $imagedir . 'logo.png'?>" /> </a>
+			</div>
+			<div class="clear"></div>
+			<?php if(! isset($_SESSION['uid'])) {?>
+			<div id="loginbar">
+				<form action="./users/login.php" method="post">
+				<table>
+				<tr>
+					<td><label>Username: </label><input type="text" name="username" class="textinput"/></td>
+					<td><label>Password :</label><input type="password" name="password" class="textinput"></td>
+					<td><input name="login_submit" type="submit" value="Submit" class="button"/><br /></td>
+				</tr>
+				</table>
+				</form>
+			</div>
+			<?php }?>
+			<div class="clear"></div>
+		</div>
+		<div id="header">  
+	  	<ul id="navigation">  
+	    	<!--  <li class="home"><a <?php if ($current_page == "home") { ?>class="selected"<?php } ?> href="<?php echo $base?>">Home</a></li>-->
+	    </ul>  
+	  </div>
+	<div class="clear"></div>
+	<div id="page">	
+	<?php
+	if(isset($_SESSION['uid'])) {
+		include_once("user_header.php");
+	} 
+	?>
+	
+	<div id="message"> 
+		<p>
+			<?php 
+				if( isset($_SESSION['message']) ) {
+					echo $_SESSION['message'];
+					unset($_SESSION['message']);
+				}
+			?>
+		</p>
+	</div>
+	
+	<div id="error"> 
+		<p>
+			<?php
+				if( isset($_SESSION['err']) ) {
+					echo $_SESSION['err'];
+					unset($_SESSION['err']);
+				}
+			?>
+		</p>
+	</div>

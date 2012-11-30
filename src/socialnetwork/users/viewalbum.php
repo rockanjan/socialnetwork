@@ -51,7 +51,7 @@ if($numrows == 0) {
 	} else {
 		//current user is the owner.
 		//also show the album options
-		echo "<a href='#'>Modify Album</a> &nbsp; &nbsp;";
+		//echo "<a href='#'>Modify Album</a> &nbsp; &nbsp;";
 		echo "<a href='addphoto.php?albumid=$albumid'>Add a photo</a> &nbsp; &nbsp;";
 		echo "<a href='cluster.php?albumid=$albumid'>Cluster Album</a>";
 		echo "<br />";

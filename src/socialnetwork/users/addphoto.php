@@ -46,7 +46,7 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 				if(getimagesize($imagepath) == 3) {
 					$isrgb = true;					
 				} else {
-					$isrgb = false;
+					$isrgb = 0;
 				}
 				//TODO: isrgb test not working
 				

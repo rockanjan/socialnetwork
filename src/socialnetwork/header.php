@@ -45,7 +45,7 @@ session_start();
 		<div id="sitename">
 			<div class="clear"></div>
 			<div id="logo">
-				<a href="<?php echo $base?>"><img src="<?php echo $imagedir . 'logo.png'?>" /> </a>
+				<a href="<?php echo $base?>"><img src="images/logo.png" /> </a>
 			</div>
 			<div class="clear"></div>
 			<?php if(! isset($_SESSION['uid'])) {?>

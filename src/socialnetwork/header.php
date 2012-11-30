@@ -2,7 +2,7 @@
 include_once 'database_open.php';
 $sitename = "Social Networking Using Image Content";
 $base = "/sn";
-$imagedir = $base . "/images/";
+$imagedir = "../images/";
 session_start();
 ?>
 <html>

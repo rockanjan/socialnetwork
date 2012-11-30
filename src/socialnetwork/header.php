@@ -50,7 +50,7 @@ session_start();
 			<div class="clear"></div>
 			<?php if(! isset($_SESSION['uid'])) {?>
 			<div id="loginbar">
-				<form action="./users/login.php" method="post">
+				<form action="<?php echo $base?>/users/login.php" method="post">
 				<table>
 				<tr>
 					<td><label>Username: </label><input type="text" name="username" class="textinput"/></td>

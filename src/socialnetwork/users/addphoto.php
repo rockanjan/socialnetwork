@@ -79,7 +79,11 @@ if(array_key_exists('addphoto_submit', $_POST)) { //form has been submitted
 					$_SESSION['message'] = "Your photo was uploaded successfully";
 					header("Location: /sn/users/viewalbum.php?id=$albumid");
 				}
-				
+			}
+			else { //error
+				$_SESSION['err'] = "There was an error uploading the file : " . $_FILES["file"]["error"];
+				header("Location: addphoto.php?albumid=$albumid");
+				exit();
 			}
 		}
 	}
